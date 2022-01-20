@@ -1198,7 +1198,7 @@ def get_play_url(media_source, play_session_id):
             "SegmentContainer": "ts",
             "VideoCodec": "h264",
             "VideoBitrate": bitrate,
-            "MaxWidth": playback_max_width,
+            "Width": playback_max_width,
             "AudioCodec": audio_codec,
             "TranscodingMaxAudioChannels": audio_max_channels,
             "AudioBitrate": audio_bitrate

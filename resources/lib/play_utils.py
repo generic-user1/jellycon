@@ -1165,7 +1165,7 @@ def get_play_url(media_source, play_session_id):
             playback_type = "0"
 
     # check if file can be direct streamed/played
-    if (can_direct_stream or can_direct_play) and playurl is None:
+    if allow_direct_file_play and (can_direct_stream or can_direct_play) and playurl is None:
         item_id = media_source.get('Id')
         playurl = ("%s/Videos/%s/stream" +
                    "?static=true" +

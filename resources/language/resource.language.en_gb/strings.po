@@ -1087,3 +1087,15 @@ msgstr "Use cached widget data"
 msgctxt "#30442"
 msgid "Simple new content check"
 msgstr "Simple new content check"
+
+msgctxt "#30443"
+msgid "Stream transcode preference"
+msgstr "Stream transcode preference"
+
+msgctxt "#30444"
+msgid "Direct play when possible"
+msgstr "Direct play when possible"
+
+msgctxt "#30445"
+msgid "Always force transcoding"
+msgstr "Always force transcoding"

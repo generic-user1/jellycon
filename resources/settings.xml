@@ -28,8 +28,9 @@
 
 		<setting label="30238" type="lsep"/>
 		<setting type="sep" />
-		<setting id="max_stream_bitrate" type="slider" label="30208" default="75000" range="400,100,100000" option="int" visible="true"/>
-		<setting id="allow_direct_file_play" type="bool" label="30433" default="false" visible="true" enable="true" />
+		<setting id="stream_transcode_pref" type="select" label="30443" lvalues="30444|30445" default="0" visible="true"/>
+		<setting id="max_stream_bitrate" type="slider" label="30208" default="75000" range="400,100,100000" option="int" visible="true" enable="!eq(-1,1)" />
+		<setting id="allow_direct_file_play" type="bool" label="30433" default="false" visible="true" enable="!eq(-2,1)" />
 		<setting id="force_transcode_h265" type="bool" label="30236" default="false" visible="true" enable="true" />
 		<setting id="force_transcode_mpeg2" type="bool" label="30239" default="false" visible="true" enable="true" />
 		<setting id="force_transcode_msmpeg4v3" type="bool" label="30240" default="false" visible="true" enable="true" />

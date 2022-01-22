@@ -1133,7 +1133,17 @@ def get_play_url(media_source, play_session_id):
     server = download_utils.get_server()
     use_https = addon_settings.getSetting('protocol') == "1"
     verify_cert = addon_settings.getSetting('verify_cert') == 'true'
-    allow_direct_file_play = addon_settings.getSetting('allow_direct_file_play') == 'true'
+    
+    #stream_transcode_pref key:
+    # "0" : Direct play when possible
+    # "1" : Always force transcoding
+    stream_transcode_pref = addon_settings.getSetting('stream_transcode_pref')
+    if stream_transcode_pref == "1": 
+        #'Always force transcoding' overrides
+        #the allow_direct_file_play setting
+        allow_direct_file_play = False
+    else:
+        allow_direct_file_play = addon_settings.getSetting('allow_direct_file_play') == 'true'
 
     can_direct_play = media_source["SupportsDirectPlay"]
     can_direct_stream = media_source["SupportsDirectStream"]
@@ -1165,7 +1175,7 @@ def get_play_url(media_source, play_session_id):
             playback_type = "0"
 
     # check if file can be direct streamed/played
-    if allow_direct_file_play and (can_direct_stream or can_direct_play) and playurl is None:
+    if stream_transcode_pref != "1" and (can_direct_stream or can_direct_play) and playurl is None:
         item_id = media_source.get('Id')
         playurl = ("%s/Videos/%s/stream" +
                    "?static=true" +
@@ -1177,7 +1187,7 @@ def get_play_url(media_source, play_session_id):
         playback_type = "1"
 
     # check is file can be transcoded
-    if can_transcode and playurl is None:
+    if can_transcode or can_direct_stream and playurl is None:
         item_id = media_source.get('Id')
         device_id = get_device_id()
         user_token = download_utils.authenticate()
@@ -1205,6 +1215,11 @@ def get_play_url(media_source, play_session_id):
         }
         if playback_video_force_8:
             transcode_params.update({"MaxVideoBitDepth": "8"})
+
+        if stream_transcode_pref == "1":
+            #if the stream transcode preference is 'Always force transcoding'
+            #force transcoding by setting AllowVideoStreamCopy to False
+            transcode_params.update({"AllowVideoStreamCopy":"false"})
 
         transcode_path = urlencode(transcode_params)
 
